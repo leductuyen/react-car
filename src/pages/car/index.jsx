@@ -13,7 +13,7 @@ import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import AboutUs from './AboutUs'
 import Repair from './Repair'
-import Booking from '../booking/Booking'
+
 import { useNavigate } from 'react-router-dom'
 
 const Car = () => {

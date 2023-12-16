@@ -9,15 +9,39 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './header.css'
 import { DateRange } from 'react-date-range'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { SearchContext } from '../../context/SearchContext'
-import { AuthContext } from '../../context/AuthContext'
+
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import { ToastContainer, toast } from 'react-toastify'
 
 const Header = ({ type }) => {
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => {
+        if (
+            destination.trim() === '' ||
+            !dates[0].startDate ||
+            !dates[0].endDate
+        ) {
+            toast.error('Vui lòng nhập đầy đủ thông tin ', {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            })
+            return
+        }
+        setShow(true)
+    }
     const [destination, setDestination] = useState('')
     const [openDate, setOpenDate] = useState(false)
     const [dates, setDates] = useState([
@@ -27,30 +51,26 @@ const Header = ({ type }) => {
             key: 'selection'
         }
     ])
-    const [openOptions, setOpenOptions] = useState(false)
-    const [options, setOptions] = useState({
-        adult: 1,
-        children: 0,
-        room: 1
-    })
+    const [formattedStartDate, setFormattedStartDate] = useState('')
+    const [formattedEndDate, setFormattedEndDate] = useState('')
+
+    useEffect(() => {
+        const startDate = format(dates[0].startDate, 'dd/MM/yyyy')
+        const endDate = format(dates[0].endDate, 'dd/MM/yyyy')
+
+        setFormattedStartDate(startDate)
+        setFormattedEndDate(endDate)
+    }, [dates])
 
     const navigate = useNavigate()
-    const { user } = useContext(AuthContext)
-
-    const handleOption = (name, operation) => {
-        setOptions((prev) => {
-            return {
-                ...prev,
-                [name]: operation === 'i' ? options[name] + 1 : options[name] - 1
-            }
-        })
-    }
 
     const { dispatch } = useContext(SearchContext)
 
     const handleSearch = () => {
-        dispatch({ type: 'NEW_SEARCH', payload: { destination, dates, options } })
-        navigate('/hotels', { state: { destination, dates, options } })
+        sessionStorage.setItem('formattedStartDate', formattedStartDate)
+        sessionStorage.setItem('formattedEndDate', formattedEndDate)
+        dispatch({ type: 'NEW_SEARCH', payload: { destination, dates } })
+        navigate('/hotels', { state: { destination, dates } })
     }
 
     return (
@@ -120,14 +140,49 @@ const Header = ({ type }) => {
                             <div className="headerSearchItem">
                                 <button
                                     className="headerBtn"
-                                    onClick={handleSearch}
+                                    onClick={handleShow}
                                 >
-                                    Tìm kiếm
+                                    Đặt lịch
                                 </button>
                             </div>
+                            <Modal
+                                show={show}
+                                onHide={handleClose}
+                                backdrop="static"
+                                keyboard={false}
+                            >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Xác nhận</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    Bạn muốn đặt lịch sửa chữa xe{' '}
+                                    <span className="destination">
+                                        {destination}
+                                    </span>
+                                    <p>
+                                        Từ ngày {formattedStartDate} đến ngày{' '}
+                                        {formattedEndDate}{' '}
+                                    </p>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button
+                                        variant="secondary"
+                                        onClick={handleClose}
+                                    >
+                                        Đóng
+                                    </Button>
+                                    <Button
+                                        onClick={handleSearch}
+                                        variant="primary"
+                                    >
+                                        Đồng ý
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                         </div>
                     </>
                 )}
+                <ToastContainer />
             </div>
         </div>
     )
