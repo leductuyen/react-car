@@ -1,0 +1,87 @@
+.register {
+    height: 100vh;
+    background-color: #2b59ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.register .card {
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 600px;
+    overflow: hidden;
+}
+.register .card .left {
+    flex: 1;
+    background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
+        url(../../assets/img/pexels-mike-bird-190537.jpg) center;
+    background-size: cover;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    color: white;
+}
+.register .card .left h1 {
+    font-size: 35px;
+}
+.register .card .left span {
+    font-size: 14px;
+}
+.register .card .left button {
+    width: 50%;
+    border-radius: 8px;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    color: rebeccapurple;
+    font-weight: bold;
+    cursor: pointer;
+}
+.register .card .right {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: center;
+}
+.register .card .right h1 {
+    color: #555;
+}
+.register .card .right form {
+    display: flex;
+    flex-direction: column;
+}
+.register .card .right label {
+    font-weight: 700;
+    color: black;
+    margin-bottom: 10px;
+}
+.register .card .right .account,
+.register .card .right .password {
+    margin-bottom: 20px;
+}
+.register .card .right form input {
+    border-radius: 8px;
+
+    border: 1px solid lightgray;
+    padding: 15px 10px;
+}
+.register .card .right form button {
+    height: 50px;
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    /* background-color: #938eef;
+    color: white;
+    font-weight: bold; */
+    cursor: pointer;
+}
+.register .card .right .error {
+    color: red;
+}

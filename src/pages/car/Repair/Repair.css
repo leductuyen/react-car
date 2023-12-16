@@ -1,0 +1,20 @@
+.repair {
+    display: flex;
+    justify-content: center;
+}
+.title {
+    color: black;
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 50px;
+    letter-spacing: 2px;
+}
+.title h4 {
+    font-size: 28px;
+    font-weight: bold;
+}
+.title p {
+    margin-top: 15px;
+    color: 18px;
+    font-weight: 600;
+}

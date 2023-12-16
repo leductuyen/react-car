@@ -1,0 +1,73 @@
+h4 {
+    font-weight: bold;
+    font-size: 28px;
+}
+h5 {
+    margin-top: 15px;
+    line-height: 2;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+}
+h6 {
+    color: #d35400;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+.img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.err {
+    margin-top: 20px;
+}
+
+.err h3 {
+    color: #2980b9;
+    font-size: 20px;
+}
+.err p {
+    line-height: 2;
+}
+
+.service_package {
+    margin-top: 20px;
+}
+
+.service_package .service_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.service_package .bullet {
+    color: black; /* color of the black dot */
+    font-size: 18px;
+    margin-right: 8px; /* adjust the space between the dot and the title */
+}
+
+.service_package span {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+.category .strong {
+    margin-top: 15px;
+}
+.category ul {
+    margin-top: 10px;
+}
+.category li {
+    margin-bottom: 8px;
+    color: black;
+    font-weight: 500;
+}
+.footer-repair {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    line-height: 2;
+    margin-top: 50px;
+}
