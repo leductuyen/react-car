@@ -1,10 +1,16 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 
 import { Dialog, Transition } from '@headlessui/react'
-
+import React, { useEffect, useState } from 'react'
 import CustomButton from '../../components/common/CustomButton'
 
 import Close from '../../assets/img/public/close.svg'
+import { AuthContext } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { format } from 'date-fns'
+import { ToastContainer, toast } from 'react-toastify'
+
 const imaginApiKey = 'hrjavascript-mastery'
 const CarDetailsImage = ({ car, angle }) => (
     <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
@@ -23,6 +29,51 @@ const CarDetailsImage = ({ car, angle }) => (
 )
 
 const CarDetails = ({ isOpen, closeModal, car }) => {
+    const { user } = useContext(AuthContext)
+
+    const navigate = useNavigate()
+    const currentDate = new Date()
+
+    // Định dạng ngày giờ theo yêu cầu
+    const formattedDate = format(currentDate, 'HH:mm dd/MM/yyyy')
+    // Lấy giá trị của cookie theo tên
+
+    const handleAdvise = async (car) => {
+        if (user) {
+            const newData = {
+                updatedBy: user._id,
+                name_car: `${car.make} ${car.model}`,
+                year_car: car.year,
+                price_car: car.price,
+                date_car: formattedDate,
+                username: user.username,
+                phone: user.phone
+            }
+
+            const response = await axios.post(
+                `http://localhost:8800/api/advise/${user._id}`,
+                newData
+            )
+
+            // Kiểm tra phản hồi từ server
+            if (response.data.success) {
+                closeModal()
+                toast.success('Thành công...', {
+                    autoClose: 1000
+                })
+            } else {
+                console.error('Error creating advise:', response.data.message)
+                closeModal()
+                // Xử lý lỗi phù hợp với ứng dụng của bạn
+                toast.success('Thành công...', {
+                    autoClose: 1000
+                })
+            }
+        } else {
+            navigate('/login')
+        }
+        console.log(car)
+    }
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -130,6 +181,7 @@ const CarDetails = ({ isOpen, closeModal, car }) => {
                                             title="Liên hệ tư vấn"
                                             btnType="button"
                                             containerStyles="bg-primary-blue text-white rounded-full mt-10"
+                                            handleClick={() => handleAdvise(car)}
                                         />
                                     </div>
                                 </Dialog.Panel>
@@ -138,6 +190,7 @@ const CarDetails = ({ isOpen, closeModal, car }) => {
                     </div>
                 </Dialog>
             </Transition>
+            <ToastContainer autoClose={5000} />
         </>
     )
 }
