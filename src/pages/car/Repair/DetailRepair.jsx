@@ -12,11 +12,13 @@ const DetailRepair = () => {
     // Access the state object containing the additional data
     const selectedItem = location.state?.selectedItem
 
-    // Check if the selectedItem exists before rendering its details
+    const sortedList = [...selectedItem.list_category].sort(
+        (a, b) => a.price_category - b.price_category
+    )
     return (
         <div>
-            <Navbar />
-            <Header type="list" />
+            {/* <Navbar />
+            <Header type="list" /> */}
             <div className="relative">
                 <main className="overflow-hidden">
                     <div
@@ -25,42 +27,65 @@ const DetailRepair = () => {
                     >
                         {selectedItem ? (
                             <>
-                                <h4> {selectedItem.title}</h4>
-                                <h5>{selectedItem.sub}</h5>
-                                <h6>{selectedItem.error}</h6>
-                                <div className="img">
-                                    <img src={selectedItem.img} alt="Bg" />
-                                </div>
+                                <h4>{selectedItem?.car}</h4>
+
+                                <h6> {selectedItem?.title}</h6>
+
+                                {selectedItem.photos && (
+                                    <div>
+                                        {selectedItem.photos.map(
+                                            (photo, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={photo}
+                                                    alt=""
+                                                />
+                                            )
+                                        )}
+                                    </div>
+                                )}
+                                <h6>
+                                    {selectedItem.list_error.length} lỗi hay gặp
+                                </h6>
                                 <div className="err">
                                     {selectedItem.list_error?.map(
                                         (item, index) => (
                                             <div key={index}>
-                                                <h3>{item.title_err}</h3>
+                                                <h3>
+                                                    {index + 1}. {item.title_err}
+                                                </h3>
                                                 <p>{item.sub_err}</p>
                                             </div>
                                         )
                                     )}
                                 </div>
-                                <h6>{selectedItem.service_package}</h6>
+                                <h6>Các gói bảo dưỡng tham khảo</h6>
                                 <div className="service_package">
-                                    {selectedItem.list_service_package?.map(
-                                        (item, index) => (
-                                            <div
-                                                key={index}
-                                                className="service_item"
-                                            >
-                                                <span className="bullet">
-                                                    &#8226;
-                                                </span>
+                                    {sortedList?.map((item, index) => (
+                                        <div key={index} className="service_item">
+                                            <span className="bullet">
+                                                &#8226;
+                                            </span>
 
-                                                <span>{item.title}</span>
+                                            <span>{item?.title_category}</span>
+                                            <div style={{ marginTop: '10px' }}>
+                                                - {item?.sub_category}
                                             </div>
-                                        )
-                                    )}
+                                            <div
+                                                style={{
+                                                    marginTop: '10px',
+                                                    color: 'red'
+                                                }}
+                                            >
+                                                Giá tham khảo:
+                                                {item?.price_category} USD
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
 
-                                <h6>{selectedItem.category}</h6>
-                                <div className="category">
+                                {/* <h6>{selectedItem.category}</h6> */}
+                                {/* <div className="category">
                                     {selectedItem.list_category?.map(
                                         (category, index) => (
                                             <div
@@ -84,7 +109,7 @@ const DetailRepair = () => {
                                             </div>
                                         )
                                     )}
-                                </div>
+                                </div> */}
                                 <div className="footer-repair">
                                     Nếu các bạn đang cần tìm gara{' '}
                                     <strong>{selectedItem.title}</strong> ở Hà Nội
@@ -108,8 +133,8 @@ const DetailRepair = () => {
                 </main>
             </div>
 
-            <MailList />
-            <Footer />
+            {/* <MailList />
+            <Footer /> */}
         </div>
     )
 }

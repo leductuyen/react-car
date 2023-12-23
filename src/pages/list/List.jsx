@@ -17,7 +17,7 @@ const List = () => {
     const { data, loading, error, reFetch } = useFetch(
         `/hotels?car=${destination}&min=${min || 0}&max=${max || 999}`
     )
-
+    console.log('carrrrrrrrrr', data)
     return (
         <div>
             <Navbar />

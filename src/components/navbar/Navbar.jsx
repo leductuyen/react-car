@@ -43,18 +43,22 @@ const NavBar = () => {
     const handleLogin = () => {
         window.location.href = '/login'
     }
+    const handleRegister = () => {
+        window.location.href = '/register'
+    }
     return (
         <>
             {currentPath === '/login' ||
             currentPath === '/register' ||
             currentPath === '/booking' ||
+            currentPath === '/hotels' ||
             isRandomId ? (
                 <></>
             ) : (
                 <header className="w-full absolute z-10">
                     <nav className="max-width flex-between padding-x padding-y bg-transparent">
                         {user ? (
-                            <CustomButton title={user.username} />
+                            user.username
                         ) : (
                             <div style={{ display: 'flex' }}>
                                 <div style={{ marginRight: '15px' }}>
@@ -70,6 +74,7 @@ const NavBar = () => {
                                         title="Đăng Ký"
                                         containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
                                         textStyles="text-white text-[14px] leading-[17px] font-bold"
+                                        handleClick={handleRegister}
                                     />
                                 </div>
                             </div>

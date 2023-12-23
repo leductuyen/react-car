@@ -257,7 +257,7 @@ const Repair = () => {
 
     const navigate = useNavigate()
     const handleShowMore = (id) => {
-        const selectedItem = data.find((item) => item.id === id)
+        const selectedItem = data.find((item) => item._id === id)
         console.log(selectedItem)
         // Navigate to the DetailRepair page with the ID and additional data
         navigate(`/repair/${id}`, { state: { selectedItem } })
@@ -307,34 +307,28 @@ const Repair = () => {
                     {list.map((item, idx) => (
                         <Col key={idx} style={{ cursor: 'pointer' }}>
                             <Card>
-                                {item.photos.length > 0 ? (
-                                    <Card.Img
-                                        variant="top"
-                                        src={item.photos[0]} // Đổi từ list[0].photos thành item.photos[0]
-                                        style={{
-                                            objectFit: 'cover',
-                                            height: '300px'
-                                        }}
-                                    />
-                                ) : (
-                                    <Card.Img
-                                        variant="top"
-                                        src="link-hinh-anh-mac-dinh.jpg"
-                                        style={{
-                                            objectFit: 'cover',
-                                            height: '300px'
-                                        }}
-                                    />
-                                )}
+                                <Card.Img
+                                    variant="top"
+                                    src={item.photos[0]} // Đổi từ list[0].photos thành item.photos[0]
+                                    style={{
+                                        objectFit: 'cover',
+                                        height: '300px'
+                                    }}
+                                />
                             </Card>
                             <Card.Body>
-                                <Card.Title>{item.title}</Card.Title>
-                                <Card.Text style={{ lineHeight: 2 }}>
-                                    {item.content}
-                                </Card.Text>
+                                <Card.Title
+                                    style={{
+                                        marginTop: '20px',
+                                        marginBottom: '20px'
+                                    }}
+                                >
+                                    {item.title}
+                                </Card.Title>
+
                                 <CustomButton
                                     title="Chi tiết"
-                                    containerStyles="w-50 py-[16px] rounded-full bg-primary-blue"
+                                    containerStyles="w-50 py-[0px] rounded-full bg-primary-blue"
                                     textStyles="text-white text-[14px] leading-[17px] font-bold"
                                     handleClick={() => handleShowMore(item._id)}
                                 />
